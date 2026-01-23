@@ -9,6 +9,7 @@ import UIKit
 
 class BottomControlStackView: UIStackView {
     // MARK: - Properties
+    
     let refreshButton = UIButton(type: .system)
     let dislikeButton = UIButton(type: .system)
     let superlikeButton = UIButton(type: .system)
@@ -18,8 +19,8 @@ class BottomControlStackView: UIStackView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        heightAnchor.constraint(equalToConstant: 100).isActive = true
         
+        distribution = .fillEqually
         refreshButton.setImage(UIImage(named: "refresh_circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         superlikeButton.setImage(UIImage(named: "super_like_circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         likeButton.setImage(UIImage(named: "like_circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -30,9 +31,9 @@ class BottomControlStackView: UIStackView {
             addArrangedSubview(view)
         }
     }
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
 }
-
-
