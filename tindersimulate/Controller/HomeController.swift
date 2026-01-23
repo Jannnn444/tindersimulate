@@ -11,6 +11,14 @@ class HomeController: UIViewController {
     // MARK: - Properties
     
     private let topStack = HomeNavigationStackView()
+    private let bottomStack = BottomControlStackView()
+    
+    private let deckView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemPink
+        view.layer.cornerRadius = 5
+        return view
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -22,7 +30,9 @@ class HomeController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
+        
+        // MARK: - Top Stack
         view.addSubview(topStack)
         topStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -31,7 +41,29 @@ class HomeController: UIViewController {
             topStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topStack.heightAnchor.constraint(equalToConstant: 80)
-            // Dont anchor the bottom when we want the view at the top
+        ])
+        
+        // MARK: - Bottom
+        view.addSubview(bottomStack)
+        bottomStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            bottomStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomStack.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        
+        // MARK: - Deck View
+        view.addSubview(deckView)
+        deckView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            deckView.topAnchor.constraint(equalTo: topStack.bottomAnchor, constant: 10),
+            deckView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            deckView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            deckView.bottomAnchor.constraint(equalTo: bottomStack.topAnchor, constant: -10)
         ])
     }
 }

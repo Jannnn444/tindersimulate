@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeNavigationStackView:UIStackView {
+class HomeNavigationStackView: UIStackView {
     // MARK: - Properties
     
     let settingsButton = UIButton(type: .system)
@@ -17,6 +17,9 @@ class HomeNavigationStackView:UIStackView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        settingsButton.setImage(UIImage(named: "top_left_profile")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        messageButton.setImage(UIImage(named: "top_messages_icon")?.withRenderingMode(.alwaysOriginal), for: .normal)
         
         [settingsButton, UIView(),tinderIcon, UIView(),messageButton].forEach { view in
             addArrangedSubview(view)
