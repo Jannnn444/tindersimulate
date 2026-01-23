@@ -43,7 +43,7 @@ class HomeController: UIViewController {
             topStack.heightAnchor.constraint(equalToConstant: 80)
         ])
         
-        // MARK: - Bottom
+        // MARK: - Bottom Stack
         view.addSubview(bottomStack)
         bottomStack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -67,3 +67,12 @@ class HomeController: UIViewController {
         ])
     }
 }
+
+
+// MARK: - State of the Progress
+
+/*
+ 1. time:
+ 2. Eps.3
+ */
+
