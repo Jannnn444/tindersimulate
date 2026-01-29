@@ -9,7 +9,6 @@ import UIKit
 
 class CardView: UIView {
     // MARK: - Properties
-    
     private let gradientLayer = CAGradientLayer()
     
     private let imageView: UIImageView = {
@@ -28,7 +27,6 @@ class CardView: UIView {
         attributedText.append(NSAttributedString(string: "  20", attributes: [.font: UIFont.systemFont(ofSize: 24), .foregroundColor: UIColor.white]))
         
         label.attributedText = attributedText
-        
         return label
     }()
     
@@ -42,6 +40,7 @@ class CardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        configureGestureRecognizers()
         print("DEBUG: Did init...")
         
         backgroundColor = .systemPurple
@@ -60,8 +59,7 @@ class CardView: UIView {
         infoButton.setDimensions(height: 40, width: 40)
         infoButton.centerY(inView: infoLabel)
         infoButton.anchor(right: rightAnchor, paddingRight: 16)
-        
-//        configureGradientLayer()
+
     }
     
     override func layoutSubviews() {
@@ -73,15 +71,55 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Helpers
+    // MARK: - Actions
+    @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: nil)
+        print("DEBUG: Translate X is \(translation.x)")
+        print("DEBUG: Translate Y is \(translation.y)")
+        
+        switch sender.state {
+        case .possible:
+            print("DEBUG: Pan did possible")
+        case .began:
+            print("DEBUG: Pan did begin")
+        case .changed:
+            print("DEBUG: Pan did changed")
+            let degrees: CGFloat = translation.x / 20
+            let angle = degrees * .pi / 180
+            let rotationalTransform = CGAffineTransform(rotationAngle: angle)
+            self.transform = rotationalTransform.translatedBy(x: translation.x, y: translation.y)
+        case .ended:
+            print("DEBUG: Pan did ended")
+        case .cancelled:
+            print("DEBUG: Pan did cancelled")
+        case .failed:
+            print("DEBUG: Pan did failed")
+        case .recognized:
+            print("DEBUG: Pan did recognized")
+        @unknown default:
+            print("DEBUG: Pan unknow default")
+        }
+    }
     
+    @objc func handleChangePhoto(sender: UITapGestureRecognizer) {
+        print("DEBUG: Did tap on photo")
+    }
+    
+    // MARK: - Helpers
     func configureGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.1]
         layer.addSublayer(gradientLayer)
         gradientLayer.frame = self.frame
     }
+    
+    func configureGestureRecognizers() {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        addGestureRecognizer(pan)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangePhoto))
+        addGestureRecognizer(tap)
+    }
 }
-
 
 
