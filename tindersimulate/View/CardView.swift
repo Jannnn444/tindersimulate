@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum SwipeDirection: Int {
+    case left = -1
+    case right = 1
+}
+
 class CardView: UIView {
     // MARK: - Properties
     private let gradientLayer = CAGradientLayer()
@@ -74,9 +79,7 @@ class CardView: UIView {
     // MARK: - Actions
     @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: nil)
-        print("DEBUG: Translate X is \(translation.x)")
-        print("DEBUG: Translate Y is \(translation.y)")
-        
+
         switch sender.state {
         case .possible:
             print("DEBUG: Pan did possible")
@@ -84,12 +87,13 @@ class CardView: UIView {
             print("DEBUG: Pan did begin")
         case .changed:
             print("DEBUG: Pan did changed")
-            let degrees: CGFloat = translation.x / 20
-            let angle = degrees * .pi / 180
-            let rotationalTransform = CGAffineTransform(rotationAngle: angle)
-            self.transform = rotationalTransform.translatedBy(x: translation.x, y: translation.y)
+            panCard(sender: sender)
+            
+            print("DEBUG: Translate X is \(translation.x)")
+            print("DEBUG: Translate Y is \(translation.y)")
         case .ended:
             print("DEBUG: Pan did ended")
+            resetCardPosition(sender: sender)
         case .cancelled:
             print("DEBUG: Pan did cancelled")
         case .failed:
@@ -106,6 +110,46 @@ class CardView: UIView {
     }
     
     // MARK: - Helpers
+    func panCard(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: nil)
+        let degrees: CGFloat = translation.x / 20
+        let angle = degrees * .pi / 180
+        let rotationalTransform = CGAffineTransform(rotationAngle: angle)
+        self.transform = rotationalTransform.translatedBy(x: translation.x, y: translation.y)
+    }
+    
+    func resetCardPosition(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: nil) // ✅ Now works!
+        let swipeThreshold: CGFloat = 100
+        let shouldDismissCard = abs(translation.x) > swipeThreshold
+        
+        if shouldDismissCard {
+            let direction: SwipeDirection = translation.x > 0 ? .right : .left
+            completeSwipe(direction: direction)
+        } else {
+            UIView.animate(
+                withDuration: 0.75,
+                delay: 0,
+                usingSpringWithDamping: 0.6,
+                initialSpringVelocity: 0.1,
+                options: .curveEaseOut
+            ) {
+                self.transform = .identity
+            }
+        }
+    }
+    
+    func completeSwipe(direction: SwipeDirection) {
+        let translationX: CGFloat = CGFloat(direction.rawValue) * 700
+        
+        UIView.animate(withDuration: 0.5) {
+            self.transform = self.transform.translatedBy(x: translationX, y: 0)
+        } completion: { _ in
+            self.removeFromSuperview()
+            print("DEBUG: Card dismissed - \(direction == .right ? "LIKE" : "NOPE")")
+        }
+    }
+    
     func configureGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.1]
