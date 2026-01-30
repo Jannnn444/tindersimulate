@@ -111,6 +111,12 @@ class CardView: UIView {
         let location = sender.location(in: nil).x
         let shouldShowNextPhoto = location > self.frame.width / 2
         
+        if shouldShowNextPhoto {
+            viewModel.showNextPhoto()
+        } else {
+            viewModel.showPreviousPhoto()
+        }
+        
         print("DEBUG: Location is \(location)")
         print("DEBUG: Threshold value is \(self.frame.width / 2)")
         print("DEBUG: Should show next photo is \(shouldShowNextPhoto)")
