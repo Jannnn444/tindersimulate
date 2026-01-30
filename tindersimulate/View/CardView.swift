@@ -16,6 +16,8 @@ class CardView: UIView {
     // MARK: - Properties
     private let gradientLayer = CAGradientLayer()
     
+    private let viewModel: CardViewModel
+    
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -23,29 +25,27 @@ class CardView: UIView {
         return iv
     }()
     
-    private let infoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        
-        let attributedText = NSMutableAttributedString(string: "Jane Doe", attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy), .foregroundColor: UIColor.white])
-        
-        attributedText.append(NSAttributedString(string: "  20", attributes: [.font: UIFont.systemFont(ofSize: 24), .foregroundColor: UIColor.white]))
-        
-        label.attributedText = attributedText
+        label.attributedText = viewModel.userInfoText
         return label
     }()
     
     private lazy var infoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "info_icon")?.withRenderingMode(.alwaysOriginal), for: .normal)
-            return button
+        return button
     }()
-
+    
     // MARK: - Lifecycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: CardViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         
         configureGestureRecognizers()
+        
+        imageView.image = viewModel.user.images.compactMap { $0 }.first
         print("DEBUG: Did init...")
         
         backgroundColor = .systemPurple
@@ -64,7 +64,7 @@ class CardView: UIView {
         infoButton.setDimensions(height: 40, width: 40)
         infoButton.centerY(inView: infoLabel)
         infoButton.anchor(right: rightAnchor, paddingRight: 16)
-
+        
     }
     
     override func layoutSubviews() {
@@ -79,12 +79,13 @@ class CardView: UIView {
     // MARK: - Actions
     @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: nil)
-
+        
         switch sender.state {
         case .possible:
             print("DEBUG: Pan did possible")
         case .began:
             print("DEBUG: Pan did begin")
+            superview?.subviews.forEach({ $0.layer.removeAllAnimations() })
         case .changed:
             print("DEBUG: Pan did changed")
             panCard(sender: sender)
@@ -107,6 +108,12 @@ class CardView: UIView {
     
     @objc func handleChangePhoto(sender: UITapGestureRecognizer) {
         print("DEBUG: Did tap on photo")
+        let location = sender.location(in: nil).x
+        let shouldShowNextPhoto = location > self.frame.width / 2
+        
+        print("DEBUG: Location is \(location)")
+        print("DEBUG: Threshold value is \(self.frame.width / 2)")
+        print("DEBUG: Should show next photo is \(shouldShowNextPhoto)")
     }
     
     // MARK: - Helpers
@@ -119,22 +126,21 @@ class CardView: UIView {
     }
     
     func resetCardPosition(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: nil) // ✅ Now works!
-        let swipeThreshold: CGFloat = 100
-        let shouldDismissCard = abs(translation.x) > swipeThreshold
+        let direction: SwipeDirection = sender.translation(in: nil).x > 100 ? .right : .left
+        let shouldDismissCard = abs(sender.translation(in: nil).x) > 100
         
-        if shouldDismissCard {
-            let direction: SwipeDirection = translation.x > 0 ? .right : .left
-            completeSwipe(direction: direction)
-        } else {
-            UIView.animate(
-                withDuration: 0.75,
-                delay: 0,
-                usingSpringWithDamping: 0.6,
-                initialSpringVelocity: 0.1,
-                options: .curveEaseOut
-            ) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut,animations: {
+            
+            if shouldDismissCard {
+                let xTranslation = CGFloat(direction.rawValue) * 1000
+                let offScreenTransform = self.transform.translatedBy(x: xTranslation, y: 0)
+                self.transform = offScreenTransform
+            } else {
                 self.transform = .identity
+            }
+        }) { _ in
+            if shouldDismissCard {
+                self.removeFromSuperview()
             }
         }
     }
