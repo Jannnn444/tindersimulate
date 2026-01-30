@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1E3B33F52F2C841C0091DA9F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B33F42F2C841C0091DA9F /* User.swift */; };
 		1E3B33F72F2C8BA40091DA9F /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B33F62F2C8BA40091DA9F /* CardViewModel.swift */; };
+		1E3B33FA2F2CB4210091DA9F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B33F92F2CB4210091DA9F /* LoginController.swift */; };
+		1E3B33FC2F2CB42C0091DA9F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3B33FB2F2CB42C0091DA9F /* RegistrationController.swift */; };
 		1E7B1E6A2F234F3D007F9DA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7B1E692F234F3D007F9DA7 /* AppDelegate.swift */; };
 		1E7B1E6C2F234F3D007F9DA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7B1E6B2F234F3D007F9DA7 /* SceneDelegate.swift */; };
 		1E7B1E6E2F234F3D007F9DA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7B1E6D2F234F3D007F9DA7 /* ViewController.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		1E3B33F42F2C841C0091DA9F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1E3B33F62F2C8BA40091DA9F /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		1E3B33F92F2CB4210091DA9F /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		1E3B33FB2F2CB42C0091DA9F /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		1E7B1E662F234F3D007F9DA7 /* tindersimulate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tindersimulate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7B1E692F234F3D007F9DA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7B1E6B2F234F3D007F9DA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +53,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E3B33F82F2CB4040091DA9F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				1E3B33F92F2CB4210091DA9F /* LoginController.swift */,
+				1E3B33FB2F2CB42C0091DA9F /* RegistrationController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		1E7B1E5D2F234F3D007F9DA7 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +118,7 @@
 		1E7B1E7F2F234F70007F9DA7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1E3B33F82F2CB4040091DA9F /* Authentication */,
 				1E3B33F62F2C8BA40091DA9F /* CardViewModel.swift */,
 			);
 			path = ViewModel;
@@ -203,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E3B33FA2F2CB4210091DA9F /* LoginController.swift in Sources */,
 				1E7B1E8A2F236797007F9DA7 /* BottomControlStackView.swift in Sources */,
 				1E7B1E862F23561B007F9DA7 /* Extension.swift in Sources */,
 				1E7B1E832F234FDF007F9DA7 /* HomeController.swift in Sources */,
@@ -212,6 +227,7 @@
 				1E3B33F52F2C841C0091DA9F /* User.swift in Sources */,
 				1E7B1E882F23567B007F9DA7 /* HomeNavigationStackView.swift in Sources */,
 				1E7B1E8C2F28BDC8007F9DA7 /* CardView.swift in Sources */,
+				1E3B33FC2F2CB42C0091DA9F /* RegistrationController.swift in Sources */,
 				1E7B1E6C2F234F3D007F9DA7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

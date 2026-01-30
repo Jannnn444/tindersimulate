@@ -27,7 +27,10 @@ class CardViewModel {
     }
     
     func showNextPhoto() {
-        guard imageIndex < user.images.count - 1 else { return }
+        guard imageIndex < user.images.count - 1 else { 
+            print("DEBUG: Image index is trying to go out of bounds")
+            return
+        }
         print("TBD - show next photo")
         imageIndex += 1
         self.imageToShow = user.images[imageIndex]
@@ -35,7 +38,10 @@ class CardViewModel {
     
     func showPreviousPhoto() {
         print("TBD - show previous photo")
-        guard imageIndex > 0 else { return }
+        guard imageIndex > 0 else { 
+            print("DEBUG: Image index is trying to go small of amount")
+            return
+        }
         imageIndex -= 1
         self.imageToShow = user.images[imageIndex]
     }
