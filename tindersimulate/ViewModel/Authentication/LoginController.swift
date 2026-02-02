@@ -29,10 +29,24 @@ class LoginController: UIViewController {
     // MARK: - Helpers
     func configureUI() {
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .systemPink
+        
+        configureGradientLayerAtLoginPage()
+        
         view.addSubview(iconImageView)
         iconImageView.centerX(inView: view)
         iconImageView.setDimensions(height: 100, width: 100)
         iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
     }
+    
+    func configureGradientLayerAtLoginPage() {
+        let topColor = UIColor.orange
+        let bottomColor = UIColor.systemPink
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        gradientLayer.locations = [0,1]
+        view.layer.addSublayer(gradientLayer)
+        gradientLayer.frame = view.frame
+    }
+
 }
