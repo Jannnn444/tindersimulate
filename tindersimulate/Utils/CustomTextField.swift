@@ -9,8 +9,8 @@ import UIKit
 
 class CustomTextField: UITextField {
     
-    init(placeholder: String) {
-        super.init(frame: .zero)
+    init(placeholder: String, isSecureField: Bool? = false) {
+    super.init(frame: .zero)
     
     let spacer = UIView()
     spacer.setDimensions(height: 50, width: 12)
@@ -23,6 +23,7 @@ class CustomTextField: UITextField {
     heightAnchor.constraint(equalToConstant: 50).isActive = true
     layer.cornerRadius = 5
     attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+    isSecureTextEntry = isSecureField!
     }
 
     required init?(coder: NSCoder) {

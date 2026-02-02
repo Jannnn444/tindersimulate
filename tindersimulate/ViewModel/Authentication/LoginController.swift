@@ -20,7 +20,7 @@ class LoginController: UIViewController {
     
     private let emailTextField = CustomTextField(placeholder: "Email")
     
-    private let passwordTextField = CustomTextField(placeholder: "Password")
+    private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
     
     // MARK: - Lifecyele
     
