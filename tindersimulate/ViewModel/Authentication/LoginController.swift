@@ -20,6 +20,12 @@ class LoginController: UIViewController {
     
     private let emailTextField: UITextField = {
         let tf = UITextField()
+        
+        let spacer = UIView()
+        spacer.setDimensions(height: 50, width: 12)
+        tf.leftView = spacer
+        tf.leftViewMode = .always
+        
         tf.borderStyle = .none
         tf.textColor = .white
         tf.backgroundColor = UIColor(white: 1, alpha: 0.2)
@@ -31,6 +37,12 @@ class LoginController: UIViewController {
     
     private let passwordTextField: UITextField = {
         let tf = UITextField()
+        
+        let spacer = UIView()
+        spacer.setDimensions(height: 50, width: 12)
+        tf.leftView = spacer
+        tf.leftViewMode = .always
+        
         tf.borderStyle = .none
         tf.textColor = .white
         tf.backgroundColor = UIColor(white: 1, alpha: 0.2)
