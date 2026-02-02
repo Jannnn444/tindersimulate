@@ -20,13 +20,28 @@ class LoginController: UIViewController {
     
     private let emailTextField = CustomTextField(placeholder: "Email")
     private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
-    
+    private let authButton: AuthButton = {
+        let button = AuthButton(title: "Log In", type: .system)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        return button
+    }()
+    private let goToRegistrationButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?", attributes: [.foregroundColor: UIColor.white])
+        return button
+    }()
+
     // MARK: - Lifecyele
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+    }
+    
+    // MARK: - Actions
+    
+    @objc func handleLogin() {
+        
     }
     
     // MARK: - Helpers
@@ -40,7 +55,7 @@ class LoginController: UIViewController {
         iconImageView.setDimensions(height: 100, width: 100)
         iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
-        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField])
+        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,authButton])
         stack.axis = .vertical
         stack.spacing = 16
         
