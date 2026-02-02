@@ -22,12 +22,16 @@ class LoginController: UIViewController {
     private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
     private let authButton: AuthButton = {
         let button = AuthButton(title: "Log In", type: .system)
-        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.addTarget(LoginController.self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     private let goToRegistrationButton: UIButton = {
         let button = UIButton(type: .system)
         let attributedTitle = NSMutableAttributedString(string: "Don't have an account?", attributes: [.foregroundColor: UIColor.white])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [.foregroundColor: UIColor.white, .font: UIFont.boldSystemFont(ofSize: 16)]))
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.addTarget(LoginController.self, action: #selector(handleShowRegistration), for: .touchUpInside)
         return button
     }()
 
@@ -44,6 +48,10 @@ class LoginController: UIViewController {
         
     }
     
+    @objc func handleShowRegistration() {
+        
+    }
+    
     // MARK: - Helpers
     func configureUI() {
         navigationController?.navigationBar.isHidden = true
@@ -55,12 +63,16 @@ class LoginController: UIViewController {
         iconImageView.setDimensions(height: 100, width: 100)
         iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
-        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,authButton])
+        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,authButton
+                                                  ])
         stack.axis = .vertical
         stack.spacing = 16
         
         view.addSubview(stack)
         stack.anchor(top: iconImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(goToRegistrationButton)
+        goToRegistrationButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
     }
     
     func configureGradientLayerAtLoginPage() {
