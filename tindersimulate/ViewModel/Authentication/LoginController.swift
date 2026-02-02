@@ -19,7 +19,6 @@ class LoginController: UIViewController {
     }()
     
     private let emailTextField = CustomTextField(placeholder: "Email")
-    
     private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
     
     // MARK: - Lifecyele
@@ -47,7 +46,6 @@ class LoginController: UIViewController {
         
         view.addSubview(stack)
         stack.anchor(top: iconImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingRight: 32)
-        UIStackView(backgroundColor: UIColor.blue) // color automatically add new stack?
     }
     
     func configureGradientLayerAtLoginPage() {
