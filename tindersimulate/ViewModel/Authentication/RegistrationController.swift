@@ -27,6 +27,15 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    private let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Already have an account?", attributes: [.foregroundColor: UIColor.white])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [.foregroundColor: UIColor.white, .font: UIFont.boldSystemFont(ofSize: 16)]))
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +43,7 @@ class RegistrationController: UIViewController {
         configureUI()
         selectPhotoButton.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         authButton.addTarget(self, action: #selector(handleRegisterUser), for: .touchUpInside)
+        goToLoginButton.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
     }
     
     // MARK: - Actions
@@ -45,6 +55,12 @@ class RegistrationController: UIViewController {
         print("DEBUG: Handle select register here")
     }
     
+    @objc func handleShowLogin() {
+        navigationController?.popViewController(animated: true)
+    }
+    // was using navigationController?.pushController which push the registration to upper stack
+    // popViewController -> pops off the top controller shows the view below, revealing LoginController underneath.
+    
     // MARK: - Helpers
     func configureUI() {
         configureGradientLayerRed()
@@ -54,14 +70,15 @@ class RegistrationController: UIViewController {
         selectPhotoButton.centerX(inView: view)
         selectPhotoButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 8)
         
-        let stack = UIStackView(arrangedSubviews: [emailTextField, fullNameTextField, passwordTextField])
+        let stack = UIStackView(arrangedSubviews: [emailTextField, fullNameTextField, passwordTextField, authButton])
         stack.axis = .vertical
         stack.spacing = 16
         
         view.addSubview(stack)
         stack.anchor(top: selectPhotoButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingRight: 32)
         
-        view.addSubview(authButton)
-        authButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
     }
 }
+
