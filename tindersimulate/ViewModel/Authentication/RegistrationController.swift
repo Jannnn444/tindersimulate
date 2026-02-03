@@ -9,8 +9,9 @@ import UIKit
 
 class RegistrationController: UIViewController {
     
-    // MARK: - Properties
+    private var viewModel = RegistrationViewModel()
     
+    // MARK: - Properties
     private let selectPhotoButton: UIButton = {
     let button = UIButton(type: .system)
         button.tintColor = .white
@@ -41,6 +42,7 @@ class RegistrationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTextFieldObservers()
         configureUI()
         selectPhotoButton.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         authButton.addTarget(self, action: #selector(handleRegisterUser), for: .touchUpInside)
@@ -48,6 +50,18 @@ class RegistrationController: UIViewController {
     }
     
     // MARK: - Actions
+    @objc func textDidChange(sender: UITextField) {
+        print("DEBUG: Text field text is \(sender.text)")
+        if sender == emailTextField {
+            viewModel.email = sender.text
+        } else if sender == passwordTextField {
+            viewModel.password = sender.text
+        } else {
+            viewModel.fullname = sender.text
+        }
+        print("DEBUG: Form is valid \(viewModel.formIsValid)")
+    }
+    
     @objc func handleRegisterUser() {
         print("DEBUG: Handle select register here")
     }
@@ -84,7 +98,17 @@ class RegistrationController: UIViewController {
         view.addSubview(goToLoginButton)
         goToLoginButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
     }
+    
+    
+    func configureTextFieldObservers() {
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        fullNameTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+    }
 }
+
+
+// MARK: - UIImagePickerControllerDelegate
 
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

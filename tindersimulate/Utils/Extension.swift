@@ -34,7 +34,7 @@ extension UIViewController {
 
 extension UIViewController {
     func configureGradientLayerRed() {
-        let topColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+        let topColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.8980392157, green: 0, blue: 0.4470588235, alpha: 1)
         
         let gradientLayer = CAGradientLayer()

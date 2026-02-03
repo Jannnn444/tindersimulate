@@ -7,15 +7,27 @@
 
 import Foundation
 
-struct LoginViewModel {
+protocol AuthenticationViewModel {
+    var formIsValid: Bool { get }
+}
+
+struct LoginViewModel: AuthenticationViewModel {
     var email: String?
     var password: String?
     
     var formIsValid: Bool {
-        return email?.isEmpty == false && password?.isEmpty == false
+        return email?.isEmpty == false && 
+        password?.isEmpty == false
     }
 }
 
-struct RegistrationViewModelb {
-    
+struct RegistrationViewModel: AuthenticationViewModel {
+    var email: String?
+    var fullname: String?
+    var password: String?
+    var formIsValid: Bool {
+        return email?.isEmpty == false &&
+        password?.isEmpty == false &&
+        fullname?.isEmpty == false
+    }
 }
