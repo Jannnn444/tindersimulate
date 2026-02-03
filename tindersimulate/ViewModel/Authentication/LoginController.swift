@@ -37,9 +37,9 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
         authButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         goToRegistrationButton.addTarget(self, action: #selector(handleShowRegistration), for: .touchUpInside)
-        configureUI()
     }
     
     // MARK: - Actions

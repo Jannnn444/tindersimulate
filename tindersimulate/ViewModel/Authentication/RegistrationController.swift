@@ -11,10 +11,34 @@ class RegistrationController: UIViewController {
     
     // MARK: - Properties
     
+    private let selectPhotoButton: UIButton = {
+    let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.setImage(UIImage(named: "plus_photo")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        
+        configureUI()
+        selectPhotoButton.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    @objc func handleSelectPhoto() {
+        print("DEBUG: Handle select photo here...")
+    }
+    
+    // MARK: - Helpers
+    func configureUI() {
+        view.backgroundColor = .systemPurple
+        
+        view.addSubview(selectPhotoButton)
+        selectPhotoButton.setDimensions(height: 275, width: 275)
+        selectPhotoButton.centerX(inView: view)
+        selectPhotoButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 8)
     }
 }
