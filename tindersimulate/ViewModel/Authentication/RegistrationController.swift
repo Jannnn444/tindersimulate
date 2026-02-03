@@ -15,6 +15,7 @@ class RegistrationController: UIViewController {
     let button = UIButton(type: .system)
         button.tintColor = .white
         button.setImage(UIImage(named: "plus_photo")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.clipsToBounds = true
         return button
     }()
     

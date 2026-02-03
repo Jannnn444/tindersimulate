@@ -9,8 +9,9 @@ import UIKit
 
 class LoginController: UIViewController {
     
-    // MARK: - Properties
+    private var viewModel = LoginViewModel()
     
+    // MARK: - Properties
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "app_icon")?.withRenderingMode(.alwaysTemplate)
@@ -39,12 +40,23 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTextFieldObservers()
         configureUI()
+        
+        // Button add actions
         authButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         goToRegistrationButton.addTarget(self, action: #selector(handleShowRegistration), for: .touchUpInside)
     }
     
     // MARK: - Actions
+    @objc func textDidChange(sender: UITextField) {
+        print("DEBUG: Text field text is \(sender.text)")
+        if sender == emailTextField {
+            viewModel.email = sender.text
+        } else {
+            viewModel.password = sender.text
+        }
+    }
     
     @objc func handleLogin() {
         
@@ -74,5 +86,10 @@ class LoginController: UIViewController {
         
         view.addSubview(goToRegistrationButton)
         goToRegistrationButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+    }
+    
+    func configureTextFieldObservers() {
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
 }
