@@ -20,10 +20,12 @@ class LoginController: UIViewController {
     
     private let emailTextField = CustomTextField(placeholder: "Email")
     private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
+    
     private let authButton: AuthButton = {
         let button = AuthButton(title: "Log In", type: .system)
         return button
     }()
+    
     private let goToRegistrationButton: UIButton = {
         let button = UIButton(type: .system)
         let attributedTitle = NSMutableAttributedString(string: "Don't have an account?", attributes: [.foregroundColor: UIColor.white])
@@ -56,15 +58,14 @@ class LoginController: UIViewController {
     func configureUI() {
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
-        configureGradientLayerAtLoginPage()
+        configureGradientLayerRed()
         
         view.addSubview(iconImageView)
         iconImageView.centerX(inView: view)
         iconImageView.setDimensions(height: 100, width: 100)
         iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
-        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,authButton
-                                                  ])
+        let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,authButton])
         stack.axis = .vertical
         stack.spacing = 16
         
@@ -74,16 +75,4 @@ class LoginController: UIViewController {
         view.addSubview(goToRegistrationButton)
         goToRegistrationButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
     }
-    
-    func configureGradientLayerAtLoginPage() {
-        let topColor = UIColor.orange
-        let bottomColor = UIColor.systemPink
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
-        gradientLayer.locations = [0,1]
-        view.layer.addSublayer(gradientLayer)
-        gradientLayer.frame = view.frame
-    }
-
 }

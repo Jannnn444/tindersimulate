@@ -4,7 +4,6 @@
 //
 //  Created by Hualiteq International on 2026/2/2.
 //
-
 import UIKit
 
 class AuthButton: UIButton {
@@ -17,12 +16,11 @@ class AuthButton: UIButton {
         titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         layer.cornerRadius = 5
         heightAnchor.constraint(equalToConstant: 50).isActive = true
-        isEnabled = false
+        isEnabled = true  
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
