@@ -57,6 +57,7 @@ class LoginController: UIViewController {
             viewModel.password = sender.text
         }
         print("DEBUG: Form is valid \(viewModel.formIsValid)")
+        checkFormStatus()
     }
     
     @objc func handleLogin() {
