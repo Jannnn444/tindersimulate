@@ -47,12 +47,15 @@ class RegistrationController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc func handleSelectPhoto() {
-        print("DEBUG: Handle select photo here...")
-    }
-    
     @objc func handleRegisterUser() {
         print("DEBUG: Handle select register here")
+    }
+    
+    @objc func handleSelectPhoto() {
+        print("DEBUG: Handle select photo here...")
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
     @objc func handleShowLogin() {
@@ -82,3 +85,16 @@ class RegistrationController: UIViewController {
     }
 }
 
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        selectPhotoButton.layer.borderColor = UIColor(white: 1, alpha: 0.7).cgColor
+        selectPhotoButton.layer.borderWidth = 3
+        selectPhotoButton.layer.cornerRadius = 10
+        selectPhotoButton.imageView?.contentMode = .scaleAspectFill
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
