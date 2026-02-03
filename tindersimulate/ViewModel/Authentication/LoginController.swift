@@ -22,7 +22,6 @@ class LoginController: UIViewController {
     private let passwordTextField = CustomTextField(placeholder: "Password", isSecureField: true)
     private let authButton: AuthButton = {
         let button = AuthButton(title: "Log In", type: .system)
-        button.addTarget(LoginController.self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     private let goToRegistrationButton: UIButton = {
@@ -31,7 +30,6 @@ class LoginController: UIViewController {
         
         attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [.foregroundColor: UIColor.white, .font: UIFont.boldSystemFont(ofSize: 16)]))
         button.setAttributedTitle(attributedTitle, for: .normal)
-        button.addTarget(LoginController.self, action: #selector(handleShowRegistration), for: .touchUpInside)
         return button
     }()
 
@@ -39,6 +37,8 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        authButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        goToRegistrationButton.addTarget(self, action: #selector(handleShowRegistration), for: .touchUpInside)
         configureUI()
     }
     
@@ -49,7 +49,7 @@ class LoginController: UIViewController {
     }
     
     @objc func handleShowRegistration() {
-        
+        navigationController?.pushViewController(RegistrationController(), animated: true)
     }
     
     // MARK: - Helpers
