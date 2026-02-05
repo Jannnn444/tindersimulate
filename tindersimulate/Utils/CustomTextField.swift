@@ -24,6 +24,8 @@ class CustomTextField: UITextField {
     heightAnchor.constraint(equalToConstant: 50).isActive = true
     layer.cornerRadius = 5
     attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+        self.passwordRules = nil
+    self.textContentType = .none
     isSecureTextEntry = isSecureField!
     }
 
